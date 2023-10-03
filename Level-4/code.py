@@ -121,10 +121,14 @@ class DB_CRUD_ops(object):
             db_con = con.create_connection(db_path)
             cur = db_con.cursor()
             
+            symtax_break = "'-"
+            for symtax_c in  symtax_break:
+                stock_symbol = stock_symbol.replace(symtax_c, '')
+                
             res = "[METHOD EXECUTED] get_stock_price\n"
-            query = "SELECT price FROM stocks WHERE symbol = '" + stock_symbol + "'"
+            query = "SELECT price FROM stocks WHERE symbol = '%s'" %stock_symbol.split(';')[0]
             res += "[QUERY] " + query + "\n"
-            if ';' in query:
+            if ';' in query and False:
                 res += "[SCRIPT EXECUTION]\n"
                 cur.executescript(query)
             else:
